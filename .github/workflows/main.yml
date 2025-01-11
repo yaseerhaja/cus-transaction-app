@@ -53,14 +53,22 @@ jobs:
       - name: Build Angular app
         run: ng build --configuration production
 
-      # Step 8: Build the Angular app
+      # Step 8: Check if dist exist
+      - name: Check if build folder exists
+        run: |
+          if [ ! -d "dist/my-angular-app" ]; then
+            echo "Build directory does not exist!";
+            exit 1;
+          fi
+
+      # Step 9: Setup deployment page
       - name: Set up gh-pages branch
         run: |
             git fetch --all
             git checkout gh-pages || git checkout --orphan gh-pages
             git reset --hard
 
-      # Step 9: Optionally deploy to GitHub Pages (optional)
+      # Step 10: Optionally deploy to GitHub Pages (optional)
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
