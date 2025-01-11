@@ -53,26 +53,31 @@ jobs:
       - name: Build Angular app
         run: ng build --configuration production
 
-      # Step 8: Check if dist exist
-      - name: Check if build folder exists
+      # Step 8: Check if build folder exists
+      - name: Check if dist folder exists
         run: |
           if [ ! -d "dist/cus-transaction-app" ]; then
             echo "Build directory does not exist!";
             exit 1;
           fi
 
-      # Step 9: Setup deployment page
+      # Step 9: Create temp folder for GitHub Pages deploy if it doesn't exist
+      - name: Create temporary deployment folder
+        run: |
+          mkdir -p /home/runner/work/cus-transaction-app/cus-transaction-app/github-pages-deploy-action-temp-deployment-folder
+
+      # Step 10: Set up gh-pages branch
       - name: Set up gh-pages branch
         run: |
-            git fetch --all
-            git checkout gh-pages || git checkout --orphan gh-pages
-            git reset --hard
+          git fetch --all
+          git checkout gh-pages || git checkout --orphan gh-pages
+          git reset --hard
 
-      # Step 10: Optionally deploy to GitHub Pages (optional)
+      # Step 11: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: dist/cus-transaction-app
+          folder: dist/cus-transaction-app  # Ensure this is the correct path
           token: ${{ secrets.GITHUB_TOKEN }}  # Make sure this is correct
           commit-message: 'Deploy to GitHub Pages'
