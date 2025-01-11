@@ -80,3 +80,9 @@ jobs:
           folder: dist/cus-transaction-app  # Ensure this is the correct path
           token: ${{ secrets.GITHUB_TOKEN }}  # Make sure this is correct
           commit-message: 'Deploy to GitHub Pages'
+
+      # Step 11: Clean up (reset any changes to prevent conflicts)
+      - name: Clean up (reset the repository to avoid any conflicts)
+        run: |
+          git checkout master
+          git reset --hard
