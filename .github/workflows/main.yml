@@ -57,7 +57,7 @@ jobs:
       - name: Build Angular app
         run: ng build --configuration production
 
-      # Step 8: Check if dist folder exists
+      # Step 8: Ensure dist folder exists
       - name: Check if dist folder exists
         run: |
           if [ ! -d "dist/cus-transaction-app" ]; then
@@ -71,6 +71,14 @@ jobs:
           git fetch --all
           git checkout gh-pages || git checkout --orphan gh-pages
           git reset --hard
+          # Reinitialize HEAD reference if orphaned
+          if [ "$(git rev-parse --abbrev-ref HEAD)" == "gh-pages" ]; then
+            echo "Reinitializing HEAD reference for gh-pages..."
+            git checkout --orphan gh-pages
+            git rm -rf .
+            git clean -f -d
+            git reset --hard
+          fi
 
       # Step 10: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
@@ -81,7 +89,7 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}  # Make sure this is correct
           commit-message: 'Deploy to GitHub Pages'
 
-      # Step 11: Clean up (reset any changes to prevent conflicts)
+      # Step 11: Clean up (reset any changes to avoid conflicts)
       - name: Clean up (reset the repository to avoid any conflicts)
         run: |
           git checkout master
