@@ -82,7 +82,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@releases/v2
         with:
           BRANCH: prod
-          BASE_BRANCH: main
+          BASE_BRANCH: master
           FOLDER: dist/cus-transaction-app/browser  # Ensure this is the correct path
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Make sure this is correct
 
