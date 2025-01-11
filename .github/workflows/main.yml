@@ -28,7 +28,11 @@ jobs:
           node-version: '18' # Use Node.js 18 for Angular 18
           cache: 'npm'
 
-      # Step 3: Install dependencies
+      # Step 3: Install Angular CLI globally
+      - name: Install Angular CLI globally
+        run: npm install -g @angular/cli
+
+      # Step 4: Install dependencies
       - name: Install dependencies
         run: npm install
 
