@@ -16,10 +16,8 @@ env:
 # Define the jobs
 jobs:
   build:
-    # Specify the operating system
     runs-on: ubuntu-latest
 
-    # Define the steps for the build job
     steps:
       # Step 1: Check out the repository code
       - name: Checkout repository
@@ -29,7 +27,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Use Node.js 18 for Angular 18
+          node-version: '18'
           cache: 'npm'
 
       # Step 3: Install Angular CLI globally
@@ -65,20 +63,19 @@ jobs:
             exit 1;
           fi
 
-      # Step 9: Ensure gh-pages branch exists or create it
-      - name: Ensure gh-pages branch exists
+      # Step 9: Set up gh-pages branch (ensure it's initialized)
+      - name: Set up gh-pages branch
         run: |
           git fetch --all
           git checkout gh-pages || git checkout --orphan gh-pages
           git reset --hard
-          # Reinitialize HEAD reference if orphaned
-          if [ "$(git rev-parse --abbrev-ref HEAD)" == "gh-pages" ]; then
-            echo "Reinitializing HEAD reference for gh-pages..."
-            git checkout --orphan gh-pages
-            git rm -rf .
-            git clean -f -d
-            git reset --hard
-          fi
+          echo "Initialized gh-pages branch."
+
+      # Debug: List contents of dist folder
+      - name: Debug - List contents of dist folder
+        run: |
+          echo "Listing contents of dist folder"
+          ls -R dist/
 
       # Step 10: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
