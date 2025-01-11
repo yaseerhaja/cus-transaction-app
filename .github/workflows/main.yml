@@ -1,0 +1,41 @@
+name: Angular CI
+
+# Run this workflow on push or pull request events
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+# Define the jobs
+jobs:
+  build:
+    # Specify the operating system
+    runs-on: ubuntu-latest
+
+    # Define the steps for the build job
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Use Node.js 18 for Angular 18
+          cache: 'npm'
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Run unit tests
+      - name: Run unit tests
+        run: npm run test -- --watch=false --no-progress
+
+      # Step 5: Build the Angular project
+      - name: Build Angular app
+        run: npm run build -- --prod
