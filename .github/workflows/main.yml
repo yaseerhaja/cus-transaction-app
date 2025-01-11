@@ -78,7 +78,7 @@ jobs:
         with:
           branch: gh-pages
           folder: dist/cus-transaction-app  # Ensure this is the correct path
-          token: ${{ secrets.GITHUB_TOKEN }}  # Make sure this is correct
+          token: ${{ secrets.GH_TOKEN }}  # Make sure this is correct
           commit-message: 'Deploy to GitHub Pages'
 
       # Step 11: Clean up (reset any changes to prevent conflicts)
