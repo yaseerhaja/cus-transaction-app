@@ -84,7 +84,7 @@ jobs:
           BRANCH: prod
           BASE_BRANCH: master
           FOLDER: dist/cus-transaction-app/browser  # Ensure this is the correct path
-          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Make sure this is correct
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Make sure this is correct.
 
       # Step 11: Clean up (reset any changes to avoid conflicts)
       - name: Clean up (reset the repository to avoid any conflicts)
