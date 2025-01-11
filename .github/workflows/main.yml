@@ -56,7 +56,7 @@ jobs:
       # Step 8: Check if dist exist
       - name: Check if build folder exists
         run: |
-          if [ ! -d "dist/my-angular-app" ]; then
+          if [ ! -d "dist/cus-transaction-app" ]; then
             echo "Build directory does not exist!";
             exit 1;
           fi
