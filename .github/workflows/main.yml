@@ -9,6 +9,10 @@ on:
     branches:
       - master
 
+# Define Env
+env:
+  ACTIONS_STEP_DEBUG: true  # Enable step debugging for more verbose logs
+
 # Define the jobs
 jobs:
   build:
@@ -61,8 +65,8 @@ jobs:
             exit 1;
           fi
 
-      # Step 9: Set up gh-pages branch (automatically handled by the deploy action)
-      - name: Set up gh-pages branch
+      # Step 9: Ensure gh-pages branch exists or create it
+      - name: Ensure gh-pages branch exists
         run: |
           git fetch --all
           git checkout gh-pages || git checkout --orphan gh-pages
