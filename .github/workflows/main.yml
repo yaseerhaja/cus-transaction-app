@@ -34,7 +34,7 @@ jobs:
 
       # Step 4: Run unit tests
       - name: Run unit tests
-        run: npm run test -- --watch=false --no-progress
+        run: ng test --watch=false --no-progress
 
       # Step 5: Build the Angular project
       - name: Build Angular app
