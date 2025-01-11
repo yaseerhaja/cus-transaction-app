@@ -28,19 +28,32 @@ jobs:
           node-version: '18' # Use Node.js 18 for Angular 18
           cache: 'npm'
 
-      # Step 3: Install dependencies
+      # Step 3: Install Angular CLI
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
+      # Step 4: Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Run unit tests
-      - name: Run unit tests
-        run: ng test --watch=false --no-progress
+      # Step 5: Install Chrome (for headless testing)
+      - name: Install Google Chrome
+        run: |
+          curl -sS https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o google-chrome.deb
+          sudo dpkg -i google-chrome.deb
+          sudo apt-get install -f
 
-      # Step 5: Build the Angular project
+      # Step 6: Run unit tests (use ChromeHeadless for headless testing)
+      - name: Run unit tests
+        run: |
+          export CHROME_BIN=/usr/bin/google-chrome-stable
+          ng test --watch=false --no-progress --browsers=ChromeHeadless
+
+      # Step 7: Build the Angular app
       - name: Build Angular app
         run: npm run build -- --prod
 
-      # Step 6: Optionally deploy to GitHub Pages (optional)
+      # Step 8: Optionally deploy to GitHub Pages (optional)
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
