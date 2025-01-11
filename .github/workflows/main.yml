@@ -67,7 +67,7 @@ jobs:
       - name: Set up gh-pages branch
         run: |
           git fetch --all
-          git checkout gh-pages || git checkout --orphan gh-pages
+          git checkout gh-pages || git checkout --orphan gh-pages  # Ensure it's created correctly
           git reset --hard
           echo "Initialized gh-pages branch."
 
@@ -78,13 +78,13 @@ jobs:
           ls -R dist/
 
       # Step 10: Deploy to GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Deploy
+        if: success()
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          branch: gh-pages
-          folder: dist/cus-transaction-app  # Ensure this is the correct path
-          token: ${{ secrets.GH_TOKEN }}  # Make sure this is correct
-          commit-message: 'Deploy to GitHub Pages'
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: 'dist/cus-transaction-app/browser'
+          enable_jekyll: false
 
       # Step 11: Clean up (reset any changes to avoid conflicts)
       - name: Clean up (reset the repository to avoid any conflicts)
