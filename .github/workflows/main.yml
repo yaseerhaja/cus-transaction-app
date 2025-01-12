@@ -1,16 +1,75 @@
-name: Angular CI
+#name: Angular CI
+#
+## Run this workflow on push or pull request events
+#on:
+#  push:
+#    branches:
+#      - master
+#
+## Define Env
+#env:
+#  ACTIONS_STEP_DEBUG: true  # Enable step debugging for more verbose logs
+#
+## Define the jobs
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      # Step 1: Check out the repository code
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      # Step 2: Set up Node.js
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '18'
+#          cache: 'npm'
+#
+#      # Step 3: Install Angular CLI globally
+#      - name: Install Angular CLI globally
+#        run: npm install -g @angular/cli
+#
+#      # Step 4: Install dependencies
+#      - name: Install dependencies
+#        run: npm install
+#
+#      # Step 5: Install Chrome (for headless testing)
+#      - name: Install Google Chrome
+#        run: |
+#          curl -sS https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o google-chrome.deb
+#          sudo dpkg -i google-chrome.deb
+#          sudo apt-get install -f
+#
+#      # Step 6: Run unit tests (use ChromeHeadless for headless testing)
+#      - name: Run unit tests
+#        run: |
+#          export CHROME_BIN=/usr/bin/google-chrome-stable
+#          ng test --watch=false --no-progress --browsers=ChromeHeadless
+#
+#      # Step 7: Build the Angular app
+#      - name: Build Angular app
+#        run: ng build --configuration production
+#
+#      # Step 8: Deploy to GitHub Pages.
+#      - name: Deploy to GitHub Pages
+#        uses: JamesIves/github-pages-deploy-action@v4
+#        with:
+#          folder: dist/cus-transaction-app/browser
+#          branch: prod
+#          token: ${{ secrets.GH_TOKEN }}
 
-# Run this workflow on push or pull request events
+name: Angular and GraphQL CI
+
 on:
   push:
     branches:
       - master
 
-# Define Env
 env:
-  ACTIONS_STEP_DEBUG: true  # Enable step debugging for more verbose logs
+  ACTIONS_STEP_DEBUG: true
 
-# Define the jobs
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,31 +90,43 @@ jobs:
       - name: Install Angular CLI globally
         run: npm install -g @angular/cli
 
-      # Step 4: Install dependencies
-      - name: Install dependencies
+      # Step 4: Install root dependencies
+      - name: Install root dependencies
         run: npm install
 
-      # Step 5: Install Chrome (for headless testing)
-      - name: Install Google Chrome
-        run: |
-          curl -sS https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o google-chrome.deb
-          sudo dpkg -i google-chrome.deb
-          sudo apt-get install -f
+      # Step 5: Install dependencies for GraphQL server
+      - name: Install GraphQL server dependencies
+        run: npm install --prefix ./server
 
-      # Step 6: Run unit tests (use ChromeHeadless for headless testing)
-      - name: Run unit tests
+      # Step 6: Run Angular unit tests
+      - name: Run Angular unit tests
         run: |
           export CHROME_BIN=/usr/bin/google-chrome-stable
           ng test --watch=false --no-progress --browsers=ChromeHeadless
 
-      # Step 7: Build the Angular app
+      # Step 7: Run GraphQL server tests
+      - name: Run GraphQL server tests
+        run: npm run test --prefix ./server
+
+      # Step 8: Build Angular app
       - name: Build Angular app
         run: ng build --configuration production
 
-      # Step 8: Deploy to GitHub Pages.
+      # Step 9: Build GraphQL server
+      - name: Build GraphQL server
+        run: npm run build --prefix ./server
+
+      # Step 10: Deploy to `prod` branch with frontend and backend subfolders
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: dist/cus-transaction-app/browser
-          branch: prod
-          token: ${{ secrets.GH_TOKEN }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git clone --branch=prod https://github.com/${{ github.repository }} deploy
+          rm -rf deploy/frontend deploy/backend
+          mkdir -p deploy/frontend deploy/backend
+          cp -R dist/cus-transaction-app/browser/* deploy/frontend
+          cp -R server/dist/* deploy/backend
+          cd deploy
+          git add .
+          git commit -m "Deploy Angular and GraphQL - $(date)"
+          git push origin prod
