@@ -1,0 +1,45 @@
+name: GraphQL CI
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  ACTIONS_STEP_DEBUG: true  # Enable step debugging for more verbose logs
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      # Step 3: Install dependencies for GraphQL server
+      - name: Install dependencies
+        run: npm install --prefix ./server
+
+      # Step 4: Run GraphQL server unit tests
+      - name: Run GraphQL server tests
+        run: npm run test --prefix ./server
+
+      # Step 5: Build the GraphQL server
+      - name: Build GraphQL server
+        run: npm run build --prefix ./server
+
+      # Step 6: Deploy GraphQL server to prod-graphql branch
+      - name: Deploy GraphQL server
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ./server/dist
+          branch: prod-graphql
+          token: ${{ secrets.GH_TOKEN }}
