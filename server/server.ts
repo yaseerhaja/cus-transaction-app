@@ -22,7 +22,7 @@ const root = {
 app.use('/graphql', graphqlHTTP({
   schema: schema,
   rootValue: root,
-  graphiql: true, // Enable GraphiQL UI
+  graphiql: true, // Enable GraphiQL UI.
 }));
 
 app.listen(8080, () => {
