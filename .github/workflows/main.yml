@@ -116,17 +116,20 @@ jobs:
       - name: Build GraphQL server
         run: npm run build --prefix ./server
 
-      # Step 10: Deploy to `prod` branch with frontend and backend subfolders
-      - name: Deploy to GitHub Pages
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git clone --branch=prod https://github.com/${{ github.repository }} deploy
-          rm -rf deploy/frontend deploy/backend
-          mkdir -p deploy/frontend deploy/backend
-          cp -R dist/cus-transaction-app/browser/* deploy/frontend
-          cp -R server/dist/* deploy/backend
-          cd deploy
-          git add .
-          git commit -m "Deploy Angular and GraphQL - $(date)"
-          git push origin prod
+      # Step 10: Deploy Angular to GitHub Pages
+      - name: Deploy Angular App
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist/cus-transaction-app/browser
+          branch: prod
+          target-folder: frontend
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step 11: Deploy GraphQL to GitHub Pages
+      - name: Deploy GraphQL Server
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: server/dist
+          branch: prod
+          target-folder: backend
+          token: ${{ secrets.GITHUB_TOKEN }}
