@@ -1,20 +1,31 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const { graphqlHTTP } = require('express-graphql');
+const { buildSchema } = require('graphql');
+
 const app = express();
 
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({extended: false})); // support encoded bodies
+// Define GraphQL schema
+const schema = buildSchema(`
+  type Query {
+    hello: String
+  }
+`);
 
-app.get('/', (req: any, res: any) => {
-  console.log(req.body);
-  console.log('status success');
-  res.send('OK');
-});
+// Define resolvers
+const root = {
+  hello: () => {
+    return 'Hello, world!';
+  },
+};
 
-app.get('/api/transactions', (req: any, res: any) => {
-  res.send(require('./transactions.json'));
-});
+// Add GraphQL endpoint
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  rootValue: root,
+  graphiql: true, // Enable GraphiQL UI
+}));
 
 app.listen(8080, () => {
-  console.log('Express app listening on port 8080!');
+  console.log('GraphQL server running at http://localhost:8080/graphql');
 });

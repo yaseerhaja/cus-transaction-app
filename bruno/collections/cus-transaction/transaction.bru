@@ -4,7 +4,16 @@ meta {
   seq: 1
 }
 
-get {
-  url: {{api_base_url}}/api/transactions
-  body: none
+post {
+  url: http://localhost:8080/graphql
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "variables":{},
+    "query":
+    "{\n  hello\n}"
+  }
 }
