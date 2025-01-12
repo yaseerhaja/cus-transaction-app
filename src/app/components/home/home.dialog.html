@@ -1,0 +1,42 @@
+<div class="dialog-form">
+  <ng-container *ngIf="responseData">
+    <div class="heading">New Employee</div>
+    <form *ngIf="newEmpFormGroup" [formGroup]="newEmpFormGroup">
+      <mat-form-field class="form-field">
+        <mat-label>Name</mat-label>
+        <input matInput value="" formControlName="name" required>
+        <mat-error *ngIf="hasError('name', 'required')">Required !</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Salary</mat-label>
+        <input matInput type="number" formControlName="salary" required value="0">
+        <mat-error *ngIf="hasError('salary', 'required')">Required !</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label> Age </mat-label>
+        <input matInput type="number" value="0" formControlName="age" required>
+        <mat-error *ngIf="hasError('age', 'required')">Required !</mat-error>
+      </mat-form-field>
+    </form>
+    <div class="action">
+      <button mat-stroked-button title="Reset" (click)="resetForm();">
+        Reset
+      </button>
+      <button class="primary" mat-stroked-button title="Create" (click)="createNewEmployee($event);">
+        Create
+      </button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="responseData === 'success'">
+    <mat-icon>info</mat-icon>
+    <span>Success</span>
+    <p>New Employee has been created Successfully.</p>
+
+    <button mat-stroked-button title="Reset" (click)="closeForm();">
+      Close
+    </button>
+  </ng-container>
+</div>

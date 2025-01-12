@@ -1,0 +1,40 @@
+<div class="login">
+  <section>
+    <mat-card id="loginCnt" class="bwsg-mat-card__login be-loading">
+      <div class="login-form">
+        <div class="title">Sign In</div>
+        <div class="error-box" *ngIf="identificationError">
+          <mat-icon>error</mat-icon>
+          Login Failed.
+        </div>
+        <form *ngIf="loginFormGroup" class="login-form-grp" [formGroup]="loginFormGroup">
+          <div class="flex row username">
+            <div class="flex-input">
+              <mat-form-field>
+                <mat-icon class="icon" matPrefix>perm_identity</mat-icon>
+                <input matInput [attr.disabled]="true" placeholder="UserName" type="text" formControlName="username"
+                  value="">
+                <mat-error *ngIf="hasError('username', 'required')">Required !</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="flex row password">
+            <div class="flex-input">
+              <mat-form-field>
+                <mat-icon class="icon" matPrefix>lock</mat-icon>
+                <input matInput [attr.disabled]="true" placeholder="Password" autocomplete="on" type="password"
+                  formControlName="password">
+                <mat-error *ngIf="hasError('password', 'required')">Required !</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="submit-cnt">
+        <button mat-raised-button (click)="onSubmit($event)" class="" color="primary" type="button">Login</button>
+      </div>
+      <div class="be-spinner"></div>
+    </mat-card>
+
+  </section>
+</div>

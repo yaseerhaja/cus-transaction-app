@@ -5,6 +5,7 @@ import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { routes } from './app.routes';
 import { InMemoryCache } from '@apollo/client/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,6 +19,6 @@ export const appConfig: ApplicationConfig = {
         cache: new InMemoryCache(),
         // other options...
       };
-    }),
+    }), provideAnimationsAsync(),
   ]
 };
