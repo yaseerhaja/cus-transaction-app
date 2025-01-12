@@ -1,10 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { AppComponentService } from './app.service';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { ApolloTestingModule } from 'apollo-angular/testing';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [AppComponent, BrowserDynamicTestingModule, ApolloTestingModule],
+      providers:[AppComponentService],
     }).compileComponents();
   });
 

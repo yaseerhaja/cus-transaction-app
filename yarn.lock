@@ -175,9 +175,9 @@
     symbol-observable "4.0.0"
     yargs "17.7.2"
 
-"@angular/common@^19.0.0":
+"@angular/common@^19.0.6":
   version "19.0.6"
-  resolved "https://registry.npmjs.org/@angular/common/-/common-19.0.6.tgz"
+  resolved "https://registry.yarnpkg.com/@angular/common/-/common-19.0.6.tgz#0bbaa9075d7f5d13f9b6f0f11025691e55ec249a"
   integrity sha512-r9IDD0+UGkrQkjyX+pApeDmIJ9INpr1uYlgmmlWNBJCVNr9SKKIVZV60sssgadew6bGynKN9dW4mGsmEzzb5BA==
   dependencies:
     tslib "^2.3.0"
@@ -203,9 +203,9 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/core@^19.0.0":
+"@angular/core@^19.0.6":
   version "19.0.6"
-  resolved "https://registry.npmjs.org/@angular/core/-/core-19.0.6.tgz"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-19.0.6.tgz#8c445809c9488e1df2e42962c4ab1021c45d1aad"
   integrity sha512-9N7FmdRHtS7zfXC/wnyap/reX7fgiOrWpVivayHjWP4RkLYXJAzJIpLyew0jrx4vf8r3lZnC0Zmq0PW007Ngjw==
   dependencies:
     tslib "^2.3.0"
@@ -214,6 +214,13 @@
   version "19.0.6"
   resolved "https://registry.npmjs.org/@angular/forms/-/forms-19.0.6.tgz"
   integrity sha512-HogauPvgDQHw2xxqKBaFgKTRRcc1xWeI/PByDCf3U6YsaqpF53Mz2CJh8X2bg2bY1RGKb67MZw7DBGFRvXx4bg==
+  dependencies:
+    tslib "^2.3.0"
+
+"@angular/platform-browser-dynamic@^19.0.6":
+  version "19.0.6"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-19.0.6.tgz#38eef1d37ccaed767453ef71b33b4287dcff6142"
+  integrity sha512-5TGLOwPlLHXJ1+Hs9b3dEmGdTpb7dfLYalVmiMUZOFBry1sMaRuw+nyqjmWn1GP3yD156hzt5QDzWA8A134AfQ==
   dependencies:
     tslib "^2.3.0"
 
