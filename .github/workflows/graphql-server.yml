@@ -24,13 +24,15 @@ jobs:
           node-version: '18'
           cache: 'npm'
 
-      # Step 3: Install dependencies for GraphQL server
+      # Step 3: Navigate to the server directory and install dependencies
       - name: Install dependencies
-        run: npm install --prefix server
+        working-directory: ./server
+        run: npm install
 
       # Step 4: Build the GraphQL server
       - name: Build GraphQL server
-        run: npm --prefix server run build
+        working-directory: ./server
+        run: npm run build
 
       # Step 5: Deploy GraphQL server to prod-graphql branch
       - name: Deploy GraphQL server
