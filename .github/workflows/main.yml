@@ -46,22 +46,27 @@ jobs:
       - name: Run GraphQL server tests
         run: npm run test --prefix ./server
 
-      # Step 8: Build Angular app
+      # Step 8: Set baseHref in angular.json for production build
+      - name: Set baseHref for Angular build
+        run: |
+          jq '.projects["cus-transaction-app"].architect.build.options.baseHref = "/cus-transaction-app/"' angular.json > angular.json.tmp && mv angular.json.tmp angular.json
+
+      # Step 9: Build Angular app
       - name: Build Angular app
         run: ng build --configuration production
 
-      # Step 9: Build GraphQL server
+      # Step 10: Build GraphQL server
       - name: Build GraphQL server
         run: npm run build --prefix ./server
 
-      # Step 10: Organize files for deployment
+      # Step 11: Organize files for deployment
       - name: Prepare deployment folder
         run: |
           mkdir -p deploy/server
           cp -R dist/cus-transaction-app/browser/* deploy/
           cp -R server/dist/* deploy/server/
 
-      # Step 11: Deploy Angular and GraphQL together
+      # Step 12: Deploy Angular and GraphQL together
       - name: Deploy Angular and GraphQL
         uses: JamesIves/github-pages-deploy-action@v4
         with:
