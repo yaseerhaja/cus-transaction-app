@@ -19,12 +19,12 @@ const root = {
 };
 
 // Add GraphQL endpoint
-app.use('/graphql', graphqlHTTP({
+app.use('/cus-transaction-app/graphql', graphqlHTTP({
   schema: schema,
   rootValue: root,
   graphiql: true, // Enable GraphiQL UI.
 }));
 
 app.listen(8080, () => {
-  console.log('GraphQL server running at http://localhost:8080/graphql');
+  console.log('GraphQL server running at http://localhost:8080/cus-transaction-app/graphql');
 });
