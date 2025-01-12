@@ -60,7 +60,7 @@ jobs:
         with:
           folder: dist/cus-transaction-app/browser
           branch: prod
-          target-folder: frontend
+          target-folder: .
           token: ${{ secrets.GITHUB_TOKEN }}
 
       # Step 11: Deploy GraphQL to GitHub Pages
@@ -69,5 +69,5 @@ jobs:
         with:
           folder: server/dist
           branch: prod
-          target-folder: backend
+          target-folder: server
           token: ${{ secrets.GITHUB_TOKEN }}
