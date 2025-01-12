@@ -54,20 +54,17 @@ jobs:
       - name: Build GraphQL server
         run: npm run build --prefix ./server
 
-      # Step 10: Deploy Angular to GitHub Pages
-      - name: Deploy Angular App
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: dist/cus-transaction-app/browser
-          branch: prod
-          target-folder: .
-          token: ${{ secrets.GITHUB_TOKEN }}
+      # Step 10: Organize files for deployment
+      - name: Prepare deployment folder
+        run: |
+          mkdir -p deploy/server
+          cp -R dist/cus-transaction-app/browser/* deploy/
+          cp -R server/dist/* deploy/server/
 
-      # Step 11: Deploy GraphQL to GitHub Pages
-      - name: Deploy GraphQL Server
+      # Step 11: Deploy Angular and GraphQL together
+      - name: Deploy Angular and GraphQL
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: server/dist
+          folder: deploy
           branch: prod
-          target-folder: server
           token: ${{ secrets.GITHUB_TOKEN }}
