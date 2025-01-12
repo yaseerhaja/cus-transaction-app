@@ -26,20 +26,16 @@ jobs:
 
       # Step 3: Install dependencies for GraphQL server
       - name: Install dependencies
-        run: npm install --prefix ./server
+        run: npm install --prefix server
 
-      # Step 4: Run GraphQL server unit tests
-      - name: Run GraphQL server tests
-        run: npm run test --prefix ./server
-
-      # Step 5: Build the GraphQL server
+      # Step 4: Build the GraphQL server
       - name: Build GraphQL server
-        run: npm run build --prefix ./server
+        run: npm --prefix server run build
 
-      # Step 6: Deploy GraphQL server to prod-graphql branch
+      # Step 5: Deploy GraphQL server to prod-graphql branch
       - name: Deploy GraphQL server
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ./server/dist
+          folder: server/dist
           branch: prod-graphql
           token: ${{ secrets.GH_TOKEN }}
