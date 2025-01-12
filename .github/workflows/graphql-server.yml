@@ -34,10 +34,10 @@ jobs:
         working-directory: ./server
         run: npm run build
 
-      # Step 5: Deploy GraphQL server to prod-graphql branch
+      # Step 11: Deploy GraphQL server to prod/backend
       - name: Deploy GraphQL server
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: server/dist
-          branch: prod-graphql
+          folder: dist/cus-transaction-app/server
+          branch: prod
           token: ${{ secrets.GH_TOKEN }}
