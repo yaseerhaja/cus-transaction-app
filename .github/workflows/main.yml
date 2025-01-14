@@ -26,7 +26,7 @@ jobs:
 
       # Step 3: Install Angular CLI globally
       - name: Install Angular CLI globally
-        run: yarn install -g @angular/cli
+        run: yarn global add @angular/cli
 
       # Step 4: Install root dependencies
       - name: Install root dependencies
