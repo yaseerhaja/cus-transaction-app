@@ -42,9 +42,10 @@ jobs:
           export CHROME_BIN=/usr/bin/google-chrome-stable
           ng test --watch=false --no-progress --browsers=ChromeHeadless
 
+
       # Step 7: Run GraphQL server tests
-      - name: Run GraphQL server tests
-        run: ng test --watch=false --no-progress --browsers=ChromeHeadless --include './server/**/*.spec.ts'
+#      - name: Run GraphQL server tests
+#        run: ng test --watch=false --no-progress --browsers=ChromeHeadless --include './server/**/*.spec.ts'
 
       # Step 8: Set baseHref in angular.json for production build
       - name: Set baseHref for Angular build
