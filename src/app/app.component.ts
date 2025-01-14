@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { AppService } from './app.service';
@@ -20,18 +20,11 @@ import {HeaderComponent} from "./components/header/header.component";
   standalone: true,
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'cus-transaction-app';
-  message: string = '';
   hasLoggedIn = true;
 
   constructor(private appService: AppService) {
     this.hasLoggedIn = this.appService.currentUserValue;
-  }
-
-  ngOnInit() {
-    this.appService.getHello().subscribe((result: any) => {
-      this.message = result?.data?.hello;
-    });
   }
 }

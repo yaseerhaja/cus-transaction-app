@@ -1,39 +1,72 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, signal, ViewChild} from '@angular/core';
+import {MatSort} from '@angular/material/sort';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {HomeService} from './home.service';
+import {Observable} from 'rxjs';
+import {AsyncPipe, DecimalPipe, NgForOf, NgIf} from '@angular/common';
+import {MatCardModule} from '@angular/material/card';
+import {MatChipsModule} from '@angular/material/chips';
 
-import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
-import {AppService} from '../../app.service';
+interface Transaction {
+  id: number;
+  amount: number;
+  currencyCode: string;
+  timestamp: string;
+  otherParty: {
+    name: string;
+  };
+}
+
+interface Day {
+  id: string;
+  transactions: Transaction[];
+}
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   standalone: true,
   imports: [
-
-  ],
-  styleUrls: ['./home.component.scss']
+    MatExpansionModule,
+    MatChipsModule,
+    NgIf, NgForOf, DecimalPipe, AsyncPipe, MatCardModule],
+  providers: [HomeService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  employeeList: any = [];
-  employeeListFiltered: any = [];
+  public transactionList$: Observable<Day[]>; // Typed observable for transactions
+  readonly panelOpenState = signal(false);
+
   @ViewChild('dataSort', { static: true }) dataSort: MatSort | undefined;
   @ViewChild('paginator', { static: true }) paginator: MatPaginator | undefined;
 
-  constructor(private appService: AppService) { }
-
-  ngOnInit(): void {
-    this.getEmployeeList();
+  constructor(private homeService: HomeService, private cdr: ChangeDetectorRef) {
+    this.transactionList$ = new Observable<Day[]>(); // Initialize as an empty observable
   }
 
-  getEmployeeList() {
-    const el = document.getElementsByClassName('tbl-home')[0];
-    el.classList.add('be-loading-active');
+  ngOnInit(): void {
+    // Fetch transactions as an observable
+    this.transactionList$ = this.homeService.getAllTransactions();
+  }
 
-    this.appService.getEmployeeList().subscribe(data => {
-      el.classList.remove('be-loading-active');
-    }, err => {
-      this.employeeList = [];
-      this.employeeListFiltered = [];
-    });
+  trackByTransactionId(index: number, transaction: Transaction): string  {
+    return transaction.timestamp;
+  }
+
+  trackByDayId(index: number, day: Day): string {
+    return day.id;
+  }
+
+  showDetailedTransaction(e: Event, transaction: Transaction): void {
+    e.preventDefault();
+    console.log(transaction);
+  }
+
+  getTimestamp(timestamp: string):string{
+    const date = new Date(timestamp);
+
+    return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}, ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`;
   }
 }

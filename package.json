@@ -11,7 +11,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test --browsers ChromeHeadless",
     "serve:ssr:cus-transaction-app": "node dist/cus-transaction-app/server/server.mjs",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "private": true,
   "dependencies": {
@@ -26,6 +27,10 @@
     "@angular/router": "^19.0.0",
     "@angular/ssr": "^19.0.7",
     "@apollo/client": "^3.12.5",
+    "@graphql-codegen/cli": "^5.0.3",
+    "@graphql-codegen/typescript": "^4.1.2",
+    "@graphql-codegen/typescript-apollo-angular": "^4.0.0",
+    "@graphql-codegen/typescript-operations": "^4.4.0",
     "apollo-angular": "^8.0.0",
     "express": "^4.18.2",
     "graphql": "^16.10.0",
@@ -51,6 +56,8 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "puppeteer": "^24.0.0",
     "typescript": "~5.6.2",
-    "typescript-eslint": "8.18.0"
+    "typescript-eslint": "8.18.0",
+    "@graphql-codegen/typescript-apollo-angular": "4.0.0",
+    "@graphql-codegen/cli": "5.0.3"
   }
 }

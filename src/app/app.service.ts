@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import { gql } from '@apollo/client/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {BehaviorSubject, map, Observable} from "rxjs";
@@ -14,24 +12,13 @@ export class AppService {
 
   constructor(
       private readonly httpClient: HttpClient,
-      private readonly router: Router,
-      private readonly apollo: Apollo) {
+      private readonly router: Router) {
     this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(<string>localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
   public get currentUserValue(): any {
     return this.currentUserSubject.value;
-  }
-
-  getHello() {
-    return this.apollo.query({
-      query: gql`
-        query {
-          hello
-        }
-      `,
-    });
   }
 
   createEmployee(formData: any) {

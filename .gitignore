@@ -44,3 +44,6 @@ Thumbs.db
 #Server
 /server/dist
 /server/node_modules
+
+#Graphql Generated
+/src/generated
