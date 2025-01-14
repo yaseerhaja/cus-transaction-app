@@ -22,19 +22,19 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: 'yarn'
+          cache: 'npm'
 
       # Step 3: Install Angular CLI globally
       - name: Install Angular CLI globally
-        run: yarn global add @angular/cli
+        run: npm install -g @angular/cli
 
       # Step 4: Install root dependencies
       - name: Install root dependencies
-        run: yarn install
+        run: npm install
 
       # Step 5: Install dependencies for GraphQL server
       - name: Install GraphQL server dependencies
-        run: yarn install --prefix ./server
+        run: npm install --prefix ./server
 
       # Step 6: Run Angular unit tests
       - name: Run Angular unit tests
@@ -42,19 +42,14 @@ jobs:
           export CHROME_BIN=/usr/bin/google-chrome-stable
           ng test --watch=false --no-progress --browsers=ChromeHeadless
 
-
       # Step 7: Run GraphQL server tests
-#      - name: Run GraphQL server tests
-#        run: ng test --watch=false --no-progress --browsers=ChromeHeadless --include './server/**/*.spec.ts'
+      - name: Run GraphQL server tests
+        run: npm run test --prefix ./server
 
       # Step 8: Set baseHref in angular.json for production build
       - name: Set baseHref for Angular build
         run: |
           jq '.projects["cus-transaction-app"].architect.build.options.baseHref = "/cus-transaction-app/"' angular.json > angular.json.tmp && mv angular.json.tmp angular.json
-
-      # Step 9: Generate Graphql
-      - name: Generate Grapqhl
-        run: yarn run codegen
 
       # Step 9: Build Angular app
       - name: Build Angular app
@@ -62,7 +57,7 @@ jobs:
 
       # Step 10: Build GraphQL server
       - name: Build GraphQL server
-        run: yarn run build --prefix ./server
+        run: npm run build --prefix ./server
 
       # Step 11: Organize files for deployment
       - name: Prepare deployment folder
