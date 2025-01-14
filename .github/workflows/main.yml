@@ -44,7 +44,7 @@ jobs:
 
       # Step 7: Run GraphQL server tests
       - name: Run GraphQL server tests
-        run: yarn run test --prefix ./server
+        run: ng test --browsers ChromeHeadless --include './server/**/*.spec.ts'
 
       # Step 8: Set baseHref in angular.json for production build
       - name: Set baseHref for Angular build
