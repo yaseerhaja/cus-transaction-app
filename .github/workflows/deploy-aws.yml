@@ -32,16 +32,21 @@ jobs:
       - name: Install root dependencies
         run: npm install
 
-      # Step 6: Run Angular unit tests
+      # Step 5: Run Angular unit tests
       - name: Run Angular unit tests
         run: |
           export CHROME_BIN=/usr/bin/google-chrome-stable
           ng test --watch=false --no-progress --browsers=ChromeHeadless
 
-      # Step 9: Build Angular app
+      # Step 6: Build Graphql CodeGen From AWS Server
+      - name: Start Graphql Codegen
+        run: npm run codegen-aws
+
+      # Step 7: Build Angular app
       - name: Build Angular app
         run: ng build --configuration production
 
+      # Step 8: Deploy to AWS S3 Bucket
       - name: S3 Sync
         uses: jakejarvis/s3-sync-action@master
         with:
@@ -53,5 +58,3 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: 'eu-north-1'   # optional: defaults to us-east-1
           SOURCE_DIR: 'dist/cus-transaction-app/browser'      # optional: defaults to entire repository
-
-

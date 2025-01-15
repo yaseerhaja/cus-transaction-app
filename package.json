@@ -9,7 +9,7 @@
     "start:windows": "cd server &&  tsc && copy transactions.json dist\\transactions.json && node dist\\server.js",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test --browsers ChromeHeadless",
+    "test": "ng test --code-coverage --browsers ChromeHeadless",
     "serve:ssr:cus-transaction-app": "node dist/cus-transaction-app/server/server.mjs",
     "lint": "ng lint",
     "codegen-local": "graphql-codegen --config codegen-local.ts",
