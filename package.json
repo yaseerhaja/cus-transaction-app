@@ -12,7 +12,10 @@
     "test": "ng test --browsers ChromeHeadless",
     "serve:ssr:cus-transaction-app": "node dist/cus-transaction-app/server/server.mjs",
     "lint": "ng lint",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "codegen-local": "graphql-codegen --config codegen-local.ts",
+
+    "< ============ AWS =========== >": "",
+    "codegen-aws": "graphql-codegen --config codegen-aws.ts"
   },
   "private": true,
   "dependencies": {

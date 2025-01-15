@@ -5,6 +5,8 @@ import { provideApollo } from 'apollo-angular';
 import { routes } from './app.routes';
 import { InMemoryCache } from '@apollo/client/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { environment } from '../environments/environment'; // Adjust path as necessary
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,7 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideApollo(() => {
       return {
-        uri: 'http://13.60.195.142:8081/graphql',
+        uri:  environment.graphqlEndpoint,
         cache: new InMemoryCache(),
         // other options...
       };
