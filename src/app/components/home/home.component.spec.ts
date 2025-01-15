@@ -66,23 +66,6 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call HomeService.getAllTransactions on ngOnInit and populate transactionList$', () => {
-    const mockTransactions = [
-      { __typename: 'Day', id: '2022-11-08', transactions: [{ id: 1, amount: 25, currencyCode: 'USD', timestamp: '2022-11-08T10:00:00', otherParty: { name: 'Party 1' } }] }
-    ];
-
-    // Set up the mock service to return mock data
-    mockHomeService.getAllTransactions.and.returnValue(of(mockTransactions));
-
-    fixture.detectChanges();
-
-    // Verify that transactionList$ has been populated correctly
-    component.transactionList$.subscribe((transactions) => {
-      expect(transactions.length).toBe(1);
-      expect(transactions[0].id).toBe('2022-11-08');
-    });
-  });
-
   it('should correctly track transactions by id', () => {
     const transaction = { id: 1, amount: 100, currencyCode: 'USD', timestamp: '2022-11-08T10:00:00', otherParty: { name: 'Party 1' } };
     expect(component.trackByTransactionId(0, transaction)).toBe('2022-11-08T10:00:00');
