@@ -13,7 +13,7 @@ const typeDefs = buildSchema(`
   type Query {
     hello: String
     getAllTransactions: [Day]!
-    getTransactionById(transactionId: Int!, date: String!): Transaction
+    getTransactionById(transactionId: Int!): Transaction
   }
 
   type Day {
@@ -81,21 +81,17 @@ const resolvers = {
       throw new Error('No transaction data available.');
     }
   },
-  getTransactionById: ({
-                         transactionId,
-                         date,
-                       }: {
-    transactionId: number;
-    date: string;
-  }): Transaction | null => {
-    const day = transactionData.days.find((d: Day) => d.id === date);
-    if (!day) {
-      throw new Error(`No transactions found for the date: ${date}`);
-    }
+  getTransactionById: ({transactionId}: { transactionId: number }): Transaction | null => {
 
-    const transaction = day.transactions.find(t => t.id === transactionId);
+    let transaction: Transaction | null = null;
+
+    transactionData.days.some(day => {
+      transaction = day.transactions.find(t => t.id === transactionId);
+      return !!transaction;
+    });
+
     if (!transaction) {
-      throw new Error(`Transaction with ID: ${transactionId} not found on date: ${date}`);
+      throw new Error(`Transaction with ID: ${transactionId} not found`);
     }
 
     const amountInEur =

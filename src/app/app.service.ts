@@ -21,19 +21,11 @@ export class AppService {
     return this.currentUserSubject.value;
   }
 
-  createEmployee(formData: any) {
-    return this.httpClient.post<any>('/api/employee/create', formData, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json; charset=utf-8'
-      })
-    });
+  public set currentUserValue(value: { id: number, name: string }) {
+    this.currentUserSubject.next(value);
   }
 
-  getEmployeeList() {
-    return this.httpClient.get<any>(`/api/employee/getEmployeeList`);
-  }
-
-  identifyLogin(formData: any) {
+  identifyLogin(formData: any): Observable<{id: number, username: string}> {
     return this.httpClient.post<any>('/api/login/identifyLogin', formData, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=utf-8'

@@ -4,9 +4,10 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {HomeService} from './home.service';
 import {Observable} from 'rxjs';
-import {AsyncPipe, DecimalPipe, NgForOf, NgIf} from '@angular/common';
+import {AsyncPipe, CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
+import {Router} from '@angular/router';
 
 interface Transaction {
   id: number;
@@ -30,20 +31,23 @@ interface Day {
   imports: [
     MatExpansionModule,
     MatChipsModule,
-    NgIf, NgForOf, DecimalPipe, AsyncPipe, MatCardModule],
+    NgIf, NgForOf, AsyncPipe, MatCardModule, DatePipe, CurrencyPipe, NgClass],
   providers: [HomeService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public transactionList$: Observable<Day[]>; // Typed observable for transactions
+  public transactionList$: Observable<Day[]>;
   readonly panelOpenState = signal(false);
 
   @ViewChild('dataSort', { static: true }) dataSort: MatSort | undefined;
   @ViewChild('paginator', { static: true }) paginator: MatPaginator | undefined;
 
-  constructor(private homeService: HomeService, private cdr: ChangeDetectorRef) {
-    this.transactionList$ = new Observable<Day[]>(); // Initialize as an empty observable
+  constructor(
+    private readonly homeService: HomeService,
+    private readonly router: Router,
+    private cdr: ChangeDetectorRef) {
+    this.transactionList$ = new Observable<Day[]>();
   }
 
   ngOnInit(): void {
@@ -61,7 +65,8 @@ export class HomeComponent implements OnInit {
 
   showDetailedTransaction(e: Event, transaction: Transaction): void {
     e.preventDefault();
-    console.log(transaction);
+
+    this.router.navigate(['/detail-page', transaction.id]);
   }
 
   getTimestamp(timestamp: string):string{

@@ -1,44 +1,36 @@
 <section class="home-page">
   <h1>All Transactions</h1>
   <div class="container">
-    <mat-accordion *ngIf="transactionList$ | async as transactionList; else noItems">
-      <mat-expansion-panel
-        *ngFor="let day of transactionList; trackBy: trackByDayId"
-        (opened)="panelOpenState.set(true)"
-        (closed)="panelOpenState.set(false)">
+    <mat-accordion *ngIf="transactionList$ | async as transactionList" class="transactions-accordion">
+      <mat-expansion-panel *ngFor="let day of transactionList">
         <mat-expansion-panel-header>
-          <mat-panel-title> {{ day.id }} </mat-panel-title>
+          <mat-panel-title>
+            {{ day.id | date: 'fullDate' }}
+          </mat-panel-title>
           <mat-panel-description>
-            Transaction Count : {{day.transactions.length}}
+            {{ day.transactions.length }} transaction(s)
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div class="timeline">
-          <div class="timeline-date" *ngFor="let transaction of day.transactions; trackBy: trackByTransactionId">
-            <h3 class="date-header">{{ getTimestamp(transaction.timestamp )}}</h3>
-            <div class="transactions">
-              <mat-card
-                appearance="outlined"
-                class="timeline-card"
-                (click)="showDetailedTransaction($event, transaction)"
-              >
-                <mat-card-content>
-                  <div class="table-container">
-                    <p><strong>Party Name:</strong> <span>{{ transaction?.otherParty?.name || 'N/A' }}</span></p>
-                  </div>
-                  <mat-chip-set aria-label="Transaction Details">
-                    <mat-chip>
-                      <strong>Amount:</strong> {{ transaction.amount | number: '1.2-2' }} {{ transaction.currencyCode }}
-                    </mat-chip>
-                  </mat-chip-set>
-                </mat-card-content>
-              </mat-card>
-            </div>
-          </div>
+
+        <div class="day-transactions">
+          <mat-card
+            *ngFor="let transaction of day.transactions"
+            class="transaction-card"
+            (click)="showDetailedTransaction($event, transaction)"
+          >
+            <mat-card-content>
+              <div class="transaction-header">
+                <h3>{{ transaction?.otherParty?.name || 'Unknown Party' }}</h3>
+                <p [ngClass]="{'positive-amount': transaction.amount > 0, 'negative-amount': transaction.amount < 0}">
+                  {{ transaction.amount | currency: transaction.currencyCode }}
+                </p>
+              </div>
+              <p><strong>Transaction ID:</strong> {{ transaction.id }}</p>
+              <p><strong>Timestamp:</strong> {{ transaction.timestamp | date: 'short' }}</p>
+            </mat-card-content>
+          </mat-card>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
-    <ng-template #noItems>
-      <p>There are no transactions to display.</p>
-    </ng-template>
   </div>
 </section>

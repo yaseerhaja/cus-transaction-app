@@ -1,20 +1,36 @@
-import { TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ErrorComponent } from './error.component';
-import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
-import {ApolloTestingModule} from 'apollo-angular/testing';
-
+import { Router } from '@angular/router';
 
 describe('ErrorComponent', () => {
+  let component: ErrorComponent;
+  let fixture: ComponentFixture<ErrorComponent>;
+  let mockRouter: jasmine.SpyObj<Router>;
+
   beforeEach(async () => {
+    // Create mock instance of Router
+    mockRouter = jasmine.createSpyObj('Router', ['navigate']);
+
+    // Configure TestBed
     await TestBed.configureTestingModule({
-      imports: [ErrorComponent, BrowserDynamicTestingModule, ApolloTestingModule],
+      providers: [
+        { provide: Router, useValue: mockRouter }
+      ]
     }).compileComponents();
+
+    fixture = TestBed.createComponent(ErrorComponent);
+    component = fixture.componentInstance;
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(ErrorComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  it('should create the component', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should call navigate to home when goToHome is called', () => {
+    // Call the goToHome method
+    component.goToHome();
+
+    // Verify that the navigate method of Router was called with the correct route
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
   });
 });

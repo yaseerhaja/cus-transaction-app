@@ -1,23 +1,51 @@
-import { TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderComponent } from './header.component';
 
-import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
-import {ApolloTestingModule} from 'apollo-angular/testing';
-import {HttpClientModule} from '@angular/common/http';
-import {Apollo} from 'apollo-angular';
+
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { NgIf } from '@angular/common';
+import {AppService} from '../../app.service';
 
 describe('HeaderComponent', () => {
+  let component: HeaderComponent;
+  let fixture: ComponentFixture<HeaderComponent>;
+  let mockAppService: jasmine.SpyObj<AppService>;
+
   beforeEach(async () => {
+    // Create mock instance of AppService
+    mockAppService = jasmine.createSpyObj('AppService', ['logout'], {
+      currentUserValue: { username: 'testUser' }
+    });
+
+    // Configure TestBed
     await TestBed.configureTestingModule({
-      imports: [HeaderComponent, BrowserDynamicTestingModule, ApolloTestingModule, HttpClientModule],
-      providers:[Apollo],
+      imports: [
+        MatMenuModule,
+        MatIconModule,
+        NgIf
+      ],
+      providers: [
+        { provide: AppService, useValue: mockAppService }
+      ]
     }).compileComponents();
+
+    fixture = TestBed.createComponent(HeaderComponent);
+    component = fixture.componentInstance;
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(HeaderComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  it('should create the component', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should call logout when logout() is triggered', () => {
+    component.logout(new Event('click'));
+
+    expect(mockAppService.logout).toHaveBeenCalled();
+  });
+
+  it('should not call logout if no event is triggered', () => {
+    component.logout(new Event('click'));
+    expect(mockAppService.logout).toHaveBeenCalled();
   });
 });

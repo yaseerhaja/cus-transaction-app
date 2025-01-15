@@ -19,7 +19,7 @@ interface Day {
   transactions: Transaction[];
 }
 
-interface GetAllTransactionsResponse {
+export interface GetAllTransactionsResponse {
   getAllTransactions: Day[];
 }
 
@@ -52,41 +52,8 @@ export class HomeService {
     })
     .pipe(
       map((result) => {
-        console.log(result.data.getAllTransactions)
         return result.data.getAllTransactions;
-
-
-
-        // // Normalize transactions to always have amounts in EUR
-        // return data.map((day) => ({
-        //   ...day,
-        //   transactions: day.transactions.map((transaction) => ({
-        //     ...transaction,
-        //     amount: this.convertToEur(
-        //       transaction.amount,
-        //       transaction.currencyCode
-        //     ),
-        //     currencyCode: 'EUR', // Override to EUR
-        //   })),
-        // }));
       })
     );
-  }
-
-  /**
-   * Converts a given amount to EUR based on the currencyCode.
-   * Currently supports USD-to-EUR conversion. Assumes 1.173628 as the USD-to-EUR rate.
-   */
-  private convertToEur(amount: number, currencyCode: string): number {
-    const conversionRates: { [key: string]: number } = {
-      USD: 1.173628,
-    };
-
-    if (currencyCode === 'USD') {
-      return amount / conversionRates['USD'];
-    }
-
-    // Assume already in EUR for other cases
-    return amount;
   }
 }

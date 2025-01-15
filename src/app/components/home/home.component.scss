@@ -1,72 +1,177 @@
-.home-page {
-  margin: 30px 160px;
-  .timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin: 1rem;
-    padding: 1rem;
-    border-left: 2px solid #ecd5e0;
+:host {
+  display: flex;
+  justify-content: center;
+  .home-page {
+    --mat-sys-on-surface-variant: #fff;
+    margin: 30px 160px;
+    width: 960px;
 
-    .timeline-date {
-      position: relative;
-      margin-left: 1.5rem;
-      padding-left: 1rem;
+    .transactions-accordion {
+      max-width: 800px;
+      margin: 2rem auto;
 
-      .date-header {
-        font-weight: bold;
-        font-size: 1.25rem;
-        color: #3f51b5;
-        margin: 0 0 12px;
-      }
+      mat-expansion-panel {
+        background-color: #f4f4f4;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-      .transactions {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
+        mat-expansion-panel-header {
+          background-color: #3f51b5;
+          color: white;
+          border-radius: 8px 8px 0 0;
+          padding: 1rem;
 
-        mat-card:hover{
-          cursor: pointer;
-          background: #e2e1ff;
-        }
+          mat-panel-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+          }
 
-        .timeline-card {
-          margin-left: 2rem;
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
-          mat-card-footer {
-            display: flex;
-            justify-content: space-between;
+          mat-panel-description {
+            font-size: 0.9rem;
+            color: #d1c4e9;
           }
         }
       }
 
-      .table-container p{
-        display: flex;
-        justify-content: flex-start;
-        width: 100%;
+      .day-transactions {
+        padding: 1rem;
 
-        strong{
-          width: 50%;
+        .transaction-card {
+          margin-bottom: 1rem;
+          padding: 1rem;
+          border-radius: 6px;
+          background-color: white;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+          &:hover{
+            cursor: pointer;
+            background-color: #f4f4f4;
+          }
+
+          .transaction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+
+            h3 {
+              font-size: 1.1rem;
+              margin: 0;
+            }
+
+            p {
+              margin: 0;
+              font-size: 1.1rem;
+              font-weight: bold;
+
+              &.positive-amount {
+                color: green;
+              }
+
+              &.negative-amount {
+                color: red;
+              }
+            }
+          }
+
+          p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+
+            strong {
+              font-weight: bold;
+            }
+          }
         }
-        span{
-          display: inline-block;
-          width: 50%;
+      }
+    }
+
+    // Responsive Styles
+    @media (max-width: 1024px) {
+      // Tablet View
+      max-width: 90%;
+      margin: 1.5rem auto;
+
+      mat-expansion-panel {
+        mat-expansion-panel-header {
+          padding: 0.8rem;
+
+          mat-panel-title {
+            font-size: 1.1rem;
+          }
+
+          mat-panel-description {
+            font-size: 0.8rem;
+          }
         }
       }
 
-      &::before {
-        content: '';
-        position: absolute;
-        left: -0.75rem;
-        top: 4px;
-        height: 0.75rem;
-        width: 0.75rem;
-        background-color: #3f51b5;
-        border-radius: 50%;
+      .day-transactions {
+        .transaction-card {
+          padding: 0.8rem;
+
+          .transaction-header {
+            h3 {
+              font-size: 1rem;
+            }
+
+            p {
+              font-size: 1rem;
+            }
+          }
+
+          p {
+            font-size: 0.85rem;
+          }
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      // Mobile View
+      max-width: 100%;
+      padding: 0;
+
+      mat-expansion-panel {
+        mat-expansion-panel-header {
+          padding: 0.6rem;
+
+          mat-panel-title {
+            font-size: 1rem;
+          }
+
+          mat-panel-description {
+            font-size: 0.75rem;
+          }
+        }
+      }
+
+      .day-transactions {
+        .transaction-card {
+          padding: 0.6rem;
+
+          .transaction-header {
+            flex-direction: column;
+            align-items: flex-start;
+
+            h3 {
+              font-size: 0.9rem;
+            }
+
+            p {
+              font-size: 0.9rem;
+              margin-top: 0.2rem;
+            }
+          }
+
+          p {
+            font-size: 0.8rem;
+          }
+        }
       }
     }
   }
 }
-
 
