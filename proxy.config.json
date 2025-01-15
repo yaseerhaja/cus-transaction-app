@@ -1,6 +1,6 @@
 {
   "/cus-transaction-app/graphql": {
-    "target": "http://localhost:8080/cus-transaction-app/graphql",
+    "target": "http://localhost:8081/graphql",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
