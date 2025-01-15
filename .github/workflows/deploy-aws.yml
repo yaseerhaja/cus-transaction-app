@@ -1,0 +1,57 @@
+name: Angular and GraphQL CI
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  ACTIONS_STEP_DEBUG: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      # Step 3: Install Angular CLI globally
+      - name: Install Angular CLI globally
+        run: npm install -g @angular/cli
+
+      # Step 4: Install root dependencies
+      - name: Install root dependencies
+        run: npm install
+
+      # Step 6: Run Angular unit tests
+      - name: Run Angular unit tests
+        run: |
+          export CHROME_BIN=/usr/bin/google-chrome-stable
+          ng test --watch=false --no-progress --browsers=ChromeHeadless
+
+      # Step 9: Build Angular app
+      - name: Build Angular app
+        run: ng build --configuration production
+
+      - name: S3 Sync
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete
+          
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: 'us-west-1'   # optional: defaults to us-east-1
+          SOURCE_DIR: 'public'      # optional: defaults to entire repository  
+
+        
