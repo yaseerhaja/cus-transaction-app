@@ -1,5 +1,5 @@
 {
-  "/cus-transaction-app/graphql": {
+  "/graphql": {
     "target": "http://localhost:8081/graphql",
     "secure": false,
     "logLevel": "debug",
