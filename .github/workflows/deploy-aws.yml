@@ -1,4 +1,4 @@
-name: Angular and GraphQL CI
+name: Angular Build and AWS Deploy
 
 on:
   push:
