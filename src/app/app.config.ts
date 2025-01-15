@@ -4,8 +4,8 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideApollo } from 'apollo-angular';
 import { routes } from './app.routes';
 import { InMemoryCache } from '@apollo/client/core';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { environment } from '../environments/environment'; // Adjust path as necessary
+import { environment } from '../environments/environment';
+import {provideNoopAnimations} from '@angular/platform-browser/animations';
 
 
 export const appConfig: ApplicationConfig = {
@@ -19,6 +19,6 @@ export const appConfig: ApplicationConfig = {
         cache: new InMemoryCache(),
         // other options...
       };
-    }), provideAnimationsAsync(),
+    }), provideNoopAnimations(),
   ]
 };
