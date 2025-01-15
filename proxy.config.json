@@ -1,6 +1,6 @@
 {
   "/graphql": {
-    "target": "http://localhost:8081/graphql",
+    "target": "http://13.60.195.142:8081/graphql",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
