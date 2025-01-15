@@ -14,7 +14,7 @@ const typeDefs = (0, graphql_1.buildSchema)(`
   type Query {
     hello: String
     getAllTransactions: [Day]!
-    getTransactionById(transactionId: Int!, date: String!): Transaction
+    getTransactionById(transactionId: Int!): Transaction
   }
 
   type Day {
@@ -73,14 +73,14 @@ const resolvers = {
             throw new Error('No transaction data available.');
         }
     },
-    getTransactionById: ({ transactionId, date, }) => {
-        const day = transactionData.days.find((d) => d.id === date);
-        if (!day) {
-            throw new Error(`No transactions found for the date: ${date}`);
-        }
-        const transaction = day.transactions.find(t => t.id === transactionId);
+    getTransactionById: ({ transactionId }) => {
+        let transaction = null;
+        transactionData.days.some(day => {
+            transaction = day.transactions.find(t => t.id === transactionId);
+            return !!transaction;
+        });
         if (!transaction) {
-            throw new Error(`Transaction with ID: ${transactionId} not found on date: ${date}`);
+            throw new Error(`Transaction with ID: ${transactionId} not found`);
         }
         const amountInEur = transaction.currencyCode === 'USD' && transaction.currencyRate
             ? transaction.amount / transaction.currencyRate
