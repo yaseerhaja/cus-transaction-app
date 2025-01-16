@@ -2,7 +2,10 @@
   <h1>All Transactions</h1>
   <div class="container">
     <mat-accordion *ngIf="transactionList$ | async as transactionList" class="transactions-accordion">
-      <mat-expansion-panel *ngFor="let day of transactionList">
+      <mat-expansion-panel
+        *ngFor="let day of transactionList"
+        data-testid="transaction-day"
+      >
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{ day.id | date: 'fullDate' }}
@@ -16,6 +19,7 @@
           <mat-card
             *ngFor="let transaction of day.transactions"
             class="transaction-card"
+            data-testid="transaction-card"
             (click)="showDetailedTransaction($event, transaction)"
           >
             <mat-card-content>

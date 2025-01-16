@@ -1,7 +1,9 @@
 <section class="detail-page">
   <h1>Transactions</h1>
   <div class="container">
-    <mat-card class="transaction-card" *ngIf="transactionIdDetail$ | async as transaction; else loading">
+    <mat-card
+      data-testid="unique-transaction"
+      class="transaction-card" *ngIf="transactionIdDetail$ | async as transaction; else loading">
       <mat-card-header>
         <div mat-card-avatar class="transaction-avatar">
           <mat-icon>account_balance_wallet</mat-icon>
