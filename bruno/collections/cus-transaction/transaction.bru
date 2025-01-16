@@ -12,8 +12,8 @@ post {
 
 body:json {
   {
-    "variables":{},
-    "query":
-    "{\n  hello\n}"
+    "operationName": "GetAllTransactions",
+    "query": "query GetAllTransactions {\n  getAllTransactions {\n    __typename\n    id\n    transactions {\n      id\n      amount\n      currencyCode\n      timestamp\n      otherParty {\n        name\n        __typename\n      }\n      __typename\n    }\n  }\n}",
+    "variables": {}
   }
 }

@@ -12,8 +12,10 @@ post {
 
 body:json {
   {
-    "variables":{},
-    "query":
-    "{\n  hello\n}"
+    "operationName": "GetTransactionById",
+    "variables": {
+      "transactionId": 42
+    },
+    "query": "query GetTransactionById($transactionId: Int!) {\n  getTransactionById(transactionId: $transactionId) {\n    id\n    timestamp\n    amount\n    currencyCode\n    currencyRate\n    description\n    otherParty {\n      name\n      iban\n      __typename\n    }\n    __typename\n  }\n}"
   }
 }
