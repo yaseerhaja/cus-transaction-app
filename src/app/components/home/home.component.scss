@@ -1,6 +1,8 @@
 :host {
   display: flex;
   justify-content: center;
+  margin: 8px;
+
   .home-page {
     --mat-sys-on-surface-variant: #fff;
     margin: 30px 160px;

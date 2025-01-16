@@ -2,33 +2,4 @@
    <div class="hamberg">
      <mat-icon>menu</mat-icon>
    </div>
-  <div class="menu-bar" *ngIf="hasLoggedIn">
-    <ul>
-      <li routerLink="/home" routerLinkActive="active">Employee Detail</li>
-      <li>
-        <button mat-icon-button [matMenuTriggerFor]="menu" title="Logout" aria-label="Logout">
-          <mat-icon>person</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="logout($event)">
-            <span>Logout</span>
-          </button>
-        </mat-menu>
-      </li>
-    </ul>
-  </div>
-  <div class="menu-bar-mb" *ngIf="hasLoggedIn">
-    <ul>
-      <li>
-        <button mat-icon-button [matMenuTriggerFor]="menu" title="Logout" aria-label="Logout">
-          <mat-icon>logout</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="logout($event)">
-            <span>Logout</span>
-          </button>
-        </mat-menu>
-      </li>
-    </ul>
-  </div>
 </header>

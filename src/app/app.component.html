@@ -1,20 +1,12 @@
-<!--<div class="left-side">-->
-<!--  <h1>Hello, {{ title }}</h1>-->
-<!--  <p>Your app is running. 🎉</p>-->
-<!--  <p>{{message}}</p>-->
-<!--</div>-->
-
-<!--<router-outlet />-->
-
 <div class="cus-transaction-app">
   <app-header></app-header>
   <section class="container">
     <router-outlet #routerOutlet="outlet"></router-outlet>
   </section>
-  <mat-toolbar class="toolbarNav" *ngIf="hasLoggedIn">
+  <mat-toolbar class="toolbarNav">
     <button class="toolbar-button" mat-button routerLink="/home" routerLinkActive="active">
       <mat-icon class="material-icons color_blue">person</mat-icon>
-      <span class="title">Employee Detail</span>
+      <span class="title">Transactions</span>
     </button>
   </mat-toolbar>
 </div>

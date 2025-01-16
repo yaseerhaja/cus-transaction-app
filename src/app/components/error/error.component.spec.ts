@@ -8,10 +8,8 @@ describe('ErrorComponent', () => {
   let mockRouter: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
-    // Create mock instance of Router
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
 
-    // Configure TestBed
     await TestBed.configureTestingModule({
       providers: [
         { provide: Router, useValue: mockRouter }
@@ -27,10 +25,8 @@ describe('ErrorComponent', () => {
   });
 
   it('should call navigate to home when goToHome is called', () => {
-    // Call the goToHome method
     component.goToHome();
 
-    // Verify that the navigate method of Router was called with the correct route
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
   });
 });

@@ -36,7 +36,7 @@ jobs:
       - name: Run Angular unit tests
         run: |
           export CHROME_BIN=/usr/bin/google-chrome-stable
-          ng test --watch=false --no-progress --browsers=ChromeHeadless
+          ng test --code-coverage --watch=false --no-progress --browsers=ChromeHeadless
 
       # Step 6: Build Graphql CodeGen From AWS Server
       - name: Start Graphql Codegen
