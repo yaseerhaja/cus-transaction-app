@@ -3,7 +3,7 @@
 A comprehensive full-stack web application with an Angular frontend, Node.js backend powered by GraphQL API, and automated testing & deployment pipelines.
 
 [![Watch the video](https://ngapp.s3.eu-north-1.amazonaws.com/assets/banner/banner-mov.gif)](https://ngapp.s3.eu-north-1.amazonaws.com/assets/banner/project-banner.mp4)
-
+![Local GIF](https://ngapp.s3.eu-north-1.amazonaws.com/assets/banner/banner-mobile.gif)
 ---
 
 ## Table of Contents

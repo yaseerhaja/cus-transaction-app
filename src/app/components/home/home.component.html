@@ -1,7 +1,7 @@
 <section class="home-page">
   <h1>All Transactions</h1>
   <div class="container">
-    <mat-accordion *ngIf="transactionList$ | async as transactionList" class="transactions-accordion">
+    <mat-accordion *ngIf="transactionList$ | async as transactionList; else loadingOrError" class="transactions-accordion">
       <mat-expansion-panel
         *ngFor="let day of transactionList"
         data-testid="transaction-day"
@@ -34,5 +34,20 @@
         </div>
       </mat-expansion-panel>
     </mat-accordion>
+
+    <ng-template #loadingOrError>
+      <div *ngIf="transactionList$ | async as transactionList; else noTransactions">
+        <!-- Error state (if applicable) -->
+        <div *ngIf="hasError" class="error-message">
+          <p>Oops, something went wrong while loading transactions. Please try again later.</p>
+        </div>
+      </div>
+
+      <ng-template #noTransactions>
+        <div class="no-transactions-message">
+          <p>No transactions available at the moment.</p>
+        </div>
+      </ng-template>
+    </ng-template>
   </div>
 </section>

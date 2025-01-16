@@ -3,7 +3,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {HomeService} from './home.service';
-import {Observable} from 'rxjs';
+import {catchError, Observable, of} from 'rxjs';
 import {AsyncPipe, CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
@@ -42,17 +42,22 @@ export class HomeComponent implements OnInit {
 
   @ViewChild('dataSort', { static: true }) dataSort: MatSort | undefined;
   @ViewChild('paginator', { static: true }) paginator: MatPaginator | undefined;
+  public hasError: boolean | undefined;
 
   constructor(
     private readonly homeService: HomeService,
-    private readonly router: Router,
-    private cdr: ChangeDetectorRef) {
+    private readonly router: Router) {
     this.transactionList$ = new Observable<Day[]>();
   }
 
   ngOnInit(): void {
     // Fetch transactions as an observable
-    this.transactionList$ = this.homeService.getAllTransactions();
+    this.transactionList$ = this.homeService.getAllTransactions().pipe(
+      catchError(() => {
+        this.hasError = true;
+        return of([]);
+      })
+    );
   }
 
   trackByTransactionId(index: number, transaction: Transaction): string  {
