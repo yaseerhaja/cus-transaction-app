@@ -1,59 +1,149 @@
-# CusTransactionApp
+# Customer Transaction App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.7.
+A comprehensive full-stack web application with an Angular frontend, Node.js backend powered by GraphQL API, and automated testing & deployment pipelines.
 
-## Development server
+![Project Banner](https://via.placeholder.com/800x200?text=Project+Banner)  <!-- Replace with actual image URL -->
 
-To start a local development server, run:
+---
+
+## Table of Contents
+
+- [About](#about)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [Features](#features)
+- [Testing](#testing)
+  - [API Testing with Bruno](#api-testing-with-bruno)
+  - [End-to-End Testing with Playwright](#end-to-end-testing-with-playwright)
+- [Deployment](#deployment)
+  - [AWS S3 (Frontend)](#aws-s3-frontend)
+  - [GitHub Actions](#github-actions)
+- [License](#license)
+
+---
+
+## About
+
+This project is a full-stack web application designed with **Angular** for the frontend and **Node.js** with **GraphQL** for the backend. It incorporates automated testing strategies with **Bruno** for API testing and **Microsoft Playwright** for end-to-end testing. Deployment is managed on **AWS** with **S3** for the frontend and **EC2** for the backend. Continuous integration and deployment (CI/CD) pipelines are set up via **GitHub Actions** for seamless operations.
+
+---
+
+## Tech Stack
+
+- **Frontend**: Angular v19, HTML, CSS, TypeScript
+- **Backend**: Node.js, GraphQL - https://github.com/yaseerhaja/cus-transaction-app-server
+- **API Testing**: Bruno
+- **End-to-End Testing**: Microsoft Playwright
+- **Deployment**:
+  - **AWS**: S3 (Frontend), EC2 (Backend)
+- **CI/CD**: GitHub Actions
+
+---
+
+## Getting Started
+
+Follow these steps to get the project up and running locally.
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- **Node.js** (v14.x or higher)
+- **Angular CLI** (v12.x or higher)
+- **AWS CLI** (for deployment)
+- **Git** (for version control)
+
+### Clone the Repository
 
 ```bash
-ng serve
+git clone https://github.com/yaseerhaja/cus-transaction-app.git
+cd cus-transaction-app
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+### Install Dependencies
+For the frontend (Angular):
 ```bash
-ng generate component component-name
+npm install
+```
+For the backend (Node.js):
+https://github.com/yaseerhaja/cus-transaction-app-server
+
+---
+
+### Project Structure
+
+```angular2html
+├── cus-transaction-app/        # Angular frontend
+│   ├── src/
+│   ├── package.json
+│   ├── bruno                   # API Test
+│   ├── e2e/                    # Microsoft Playwright Smoke test
+│   ├── .github/                # GitHub Actions workflow files
+│   ├── └── workflows/
+│   ├── README.md
+│   └── angular.json
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
+## Features
+
+- **Frontend**: Responsive UI built with Angular, communicating with a GraphQL API.
+- **Backend**: RESTful GraphQL API built with Node.js for seamless data interaction.
+- **API Testing**: Bruno for automated API tests to ensure the backend is functional.
+- **End-to-End Testing**: Microsoft Playwright for testing user flows and frontend interactions.
+- **CI/CD**: Fully automated build, test, and deployment pipeline through GitHub Actions.
+- **Deployment**:
+  - **Frontend** is hosted on AWS S3.(http://ngapp.s3-website.eu-north-1.amazonaws.com)
+  - **Backend** is deployed on AWS EC2. (http://13.60.195.142:8081/graphql)
+
+---
+
+## Testing
+
+### API Testing with Bruno
+
+[Bruno](https://github.com/brunocsilva/bruno) is used for API testing. It ensures that the backend GraphQL API is working as expected by running automated tests.
+
+
+### End-to-End Testing with Playwright
+
+We use [Microsoft Playwright](https://playwright.dev/) to perform end-to-end testing to ensure the frontend works smoothly.
+To run Playwright tests:
+
+For Headless Mode
 ```bash
-ng generate --help
+npm run start:test
+npm run test:e2e
 ```
 
-## Building
-
-To build the project run:
-
+For UI Inreractive
 ```bash
-ng build
+npm run start:test
+npm run test:e2e:ui
 ```
+---
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Deployment
 
-## Running unit tests
+### GitHub Actions
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+I have set up **GitHub Actions** for CI/CD that handles the separate deployment of frontend and backend.
 
-```bash
-ng test
-```
+- **Frontend Workflow**: Automatically deploys the Angular app to AWS S3 on push to the `master` branch.
 
-## Running end-to-end tests
+Check the `.github/workflows/` directory for workflow files.
 
-For end-to-end (e2e) testing, run:
+### AWS S3 (Frontend)
+The frontend is hosted on AWS S3. Once the build is ready, you can deploy the application by uploading the contents of the dist/ folder to an S3 bucket.
+http://ngapp.s3-website.eu-north-1.amazonaws.com
 
-```bash
-ng e2e
-```
+---
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## License
 
-## Additional Resources
+This project is licensed under the MIT License. See the `LICENSE` file for details.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+You can find the `LICENSE` file in the root of the repository.
+
