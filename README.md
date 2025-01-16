@@ -2,7 +2,7 @@
 
 A comprehensive full-stack web application with an Angular frontend, Node.js backend powered by GraphQL API, and automated testing & deployment pipelines.
 
-![Project Banner](https://via.placeholder.com/800x200?text=Project+Banner)  <!-- Replace with actual image URL -->
+[![Watch the video](https://ngapp.s3.eu-north-1.amazonaws.com/assets/banner/banner-mov.gif)](https://ngapp.s3.eu-north-1.amazonaws.com/assets/banner/project-banner.mp4)
 
 ---
 
